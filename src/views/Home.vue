@@ -1,5 +1,6 @@
 <template>
-    <header-comp></header-comp>
+    <header-comp/>
+    <player-comp/>
     <div class="main">
         <audio-list-comp/>
         <sidebar-comp/>
@@ -8,8 +9,10 @@
 
 <script>
   import Header from '@/components/Header.vue';
+  import Player from '@/components/Player.vue';
   import Sidebar from '@/components/Sidebar.vue';
   import AudioList from '@/components/Audio-list.vue';
+
   export default {
     data() {
       return {
@@ -17,8 +20,9 @@
       }
     },
     components: {
-      'header-comp': Header,
-      'sidebar-comp': Sidebar,
+      'header-comp'    : Header,
+      'player-comp'    : Player,
+      'sidebar-comp'   : Sidebar,
       'audio-list-comp': AudioList
     }
   }
