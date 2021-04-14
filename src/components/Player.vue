@@ -3,8 +3,8 @@
     <div class="player">
         <ul class="player-buttons">
             <li data-prev class="player-buttons-btn player-buttons-prev">prev</li>
-            <li v-if="!play" class="player-buttons-btn player-buttons-play">Play</li>
-            <li v-else class="player-buttons-btn player-buttons-play">Pause</li>
+            <li @click="switchPlay" v-if="!play" class="player-buttons-btn player-buttons-play">Play</li>
+            <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play">Pause</li>
             <li data-next class=" player-buttons-btn player-buttons-next">next</li>
         </ul>
         <p class="player-txt">Автор - название аудио</p>
@@ -16,9 +16,10 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import { mapState, mapMutations } from 'vuex';
     export default {
-        computed: mapState(['play'])
+        computed: mapState(['play']),
+        methods: mapMutations(['switchPlay'])
     }
 </script>
 
