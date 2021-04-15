@@ -32,7 +32,12 @@
             }
         }),
         methods: {
-            ...mapMutations(['switchPlay']),
+            switchPlay() { 
+                if (!this.$store.state.currentAudio) {//Включать первый трек при первом запуске
+                     this.$store.commit('setCurrent', this.$store.state.tracks[0]);
+                }
+                this.$store.commit('switchPlay');
+            },
             progressUpdate(e) {
                 let audioElem = e.target;
                 let progressElem = document.querySelector('.player-progress');
