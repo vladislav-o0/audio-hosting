@@ -21,14 +21,15 @@
         methods: {
             ...mapMutations(['switchPlay', 'setCurrent']),
             setPlay() {
-                if (!this.$store.state.currentAudio || !this.$store.state.play) {
+                if (this.$store.state.currentAudio == this.audio) return this.switchPlay(); 
+
+                if (!this.$store.state.currentAudio || !this.$store.state.play) { 
                     this.setCurrent(this.audio);
                     this.switchPlay();
                     return;
                 }
-                if (this.$store.state.currentAudio == this.audio) return this.switchPlay(); 
                 
-                if (this.$store.state.play) {
+                if (this.$store.state.play) { 
                     this.setCurrent(this.audio); 
                 }
             },

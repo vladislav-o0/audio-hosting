@@ -1,5 +1,5 @@
 <template>
-    <audio @timeupdate="progressUpdate" id="audio"></audio>
+    <audio @timeupdate="progressUpdate" id="audio" :src="currentAudio.src"></audio>
     <div class="player">
         <ul class="player-buttons">
             <li data-prev class="player-buttons-btn player-buttons-prev">prev</li>
@@ -7,9 +7,9 @@
             <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play">Pause</li>
             <li data-next class=" player-buttons-btn player-buttons-next">next</li>
         </ul>
-        <p class="player-txt">Автор - название аудио</p>
+        <p class="player-txt">{{currentAudio.author}} - {{currentAudio.name}}</p>
         <div class="player-progress" @click="audioRewind">
-            <span class="player-time">время</span>
+            <span class="player-time">{{time}}</span>
             <div class="player-progress-line"></div>
         </div>
     </div>
@@ -17,9 +17,63 @@
 
 <script>
     import { mapState, mapMutations } from 'vuex';
+
     export default {
-        computed: mapState(['play']),
-        methods: mapMutations(['switchPlay'])
+        data() {
+            return {
+                time: ''
+            }
+        },
+        computed: mapState({
+            play: 'play',
+            currentAudio(state) {
+                if (!state.currentAudio) return '';
+                return state.currentAudio;
+            }
+        }),
+        methods: {
+            ...mapMutations(['switchPlay']),
+            progressUpdate(e) {
+                let audioElem = e.target;
+                let progressElem = document.querySelector('.player-progress');
+                let progressLineElem = document.querySelector('.player-progress-line');
+
+                let onePercent = progressElem.clientWidth / 100;  
+                let passedPercent = 100 * audioElem.currentTime / audioElem.duration;
+
+                progressLineElem.style.width = onePercent * passedPercent + 'px';
+
+                let min = Math.floor(audioElem.currentTime / 60);
+                let sec = Math.floor(audioElem.currentTime - min * 60);
+                min = min.toString();
+                if (min.length < 2) min = '0' + min;
+                sec = sec.toString();
+                if (sec.length < 2) sec = '0' + sec;
+                this.time = `${min}:${sec}`;
+            },
+            audioRewind(e) {
+                let audioElem = document.getElementById('audio');
+                let progressElem = document.querySelector('.player-progress');
+
+                audioElem.currentTime = audioElem.duration * e.offsetX / progressElem.clientWidth;
+            }
+        },
+        watch: {
+            play(val) {
+                let audioElem = document.getElementById('audio');
+                let attr = audioElem.getAttribute('src');
+    
+                if (attr && val) audioElem.play();
+                if (attr && !val) audioElem.pause();
+            },
+            currentAudio(val) {
+                let audioElem = document.getElementById('audio');
+
+                setTimeout(() => {
+                           audioElem.play()
+                       }, 0);
+            }
+        }
     }
 </script>
 
@@ -53,6 +107,23 @@
                 width: 40px;
                 height: 40px;
             }
+        }
+        &-progress {
+            width: 100%;
+            height: 15px;
+            background: #e980fb;
+            text-align: center;
+            position: relative;
+            &-line {
+                background: #b388fe;
+                height: 100%;
+                width: 0;
+            }
+        }
+        &-time {
+            position: absolute;
+            left: 0;
+            right: 0;
         }
     }
 </style>
