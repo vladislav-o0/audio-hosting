@@ -2,10 +2,10 @@
     <audio @timeupdate="progressUpdate" id="audio" :src="currentAudio.src"></audio>
     <div class="player">
         <ul class="player-buttons">
-            <li data-prev class="player-buttons-btn player-buttons-prev">prev</li>
+            <li @click="flipping" class="player-buttons-btn player-buttons-prev">prev</li>
             <li @click="switchPlay" v-if="!play" class="player-buttons-btn player-buttons-play">Play</li>
             <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play">Pause</li>
-            <li data-next class=" player-buttons-btn player-buttons-next">next</li>
+            <li @click="flipping" class=" player-buttons-btn player-buttons-next">next</li>
         </ul>
         <p class="player-txt">{{currentAudio.author}} - {{currentAudio.name}}</p>
         <div class="player-progress" @click="audioRewind">
@@ -37,6 +37,27 @@
                      this.$store.commit('setCurrent', this.$store.state.tracks[0]);
                 }
                 this.$store.commit('switchPlay');
+            },
+            flipping(e) {
+                let btn = e.target;
+                let tracks = this.$store.state.tracks;
+                let indexCurrentAudio = tracks.indexOf(this.currentAudio);
+          
+  
+                if (btn.classList.contains('player-buttons-prev')) {
+                    if (indexCurrentAudio > 0) {
+                        this.$store.commit('setCurrent', tracks[indexCurrentAudio - 1]);
+                        if (!this.play) this.switchPlay();
+                        }
+                    return;
+                }
+                if (btn.classList.contains('player-buttons-next')) {
+                    if (indexCurrentAudio < tracks.length - 1) {
+                        this.$store.commit('setCurrent', tracks[indexCurrentAudio + 1]);
+                        if (!this.play) this.switchPlay();
+                        }
+                    return;
+                }
             },
             progressUpdate(e) {
                 let audioElem = e.target;
