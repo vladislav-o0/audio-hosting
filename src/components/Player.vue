@@ -40,7 +40,7 @@
             },
             flipping(e) {
                 let btn = e.target;
-                let tracks = this.$store.state.tracks;
+                let tracks = this.$store.getters.filteredTracks;
                 let indexCurrentAudio = tracks.indexOf(this.currentAudio);
           
   
@@ -52,7 +52,7 @@
                     return;
                 }
                 if (btn.classList.contains('player-buttons-next')) {
-                    if (indexCurrentAudio < tracks.length - 1) {
+                    if (indexCurrentAudio < tracks.length - 1 && indexCurrentAudio > -1) {
                         this.$store.commit('setCurrent', tracks[indexCurrentAudio + 1]);
                         if (!this.play) this.switchPlay();
                         }
