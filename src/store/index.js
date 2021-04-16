@@ -18,6 +18,26 @@ export default createStore({
       author: 'Виктор Цой',
       src: 'audio/vik.mp3',
       genre: 'rock'
+    }, {
+      name: 'Пачка сигарет',
+      author: 'Виктор Цой',
+      src: 'audio/vik2.mp3',
+      genre: 'rock'
+    }, {
+      name: 'Апрель',
+      author: 'Виктор Цой',
+      src: 'audio/vik3.mp3',
+      genre: 'rock'
+    }, {
+      name: 'Надя, надечка',
+      author: 'Петр Лещенко',
+      src: 'audio/petr2.mp3',
+      genre: 'pop'
+    },{
+      name: 'Эх, Андрюша',
+      author: 'Петр Лещенко',
+      src: 'audio/petr3.mp3',
+      genre: 'pop'
     }]
   },
   mutations: {
@@ -33,8 +53,8 @@ export default createStore({
 
       if (state.filterParams.search) {
         filteredTracks = filteredTracks.filter(item=>{
-          return item.name.includes(state.filterParams.search) || 
-               item.author.includes(state.filterParams.search)
+          return item.name.toLowerCase().includes(state.filterParams.search.toLowerCase()) || 
+               item.author.toLowerCase().includes(state.filterParams.search.toLowerCase())
         })
       }
       
