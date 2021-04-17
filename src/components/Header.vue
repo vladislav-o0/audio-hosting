@@ -1,8 +1,13 @@
 <template>
     <div class="header">
         <img class="header-logo" src="logo.svg" alt="logo">
-        <div class="header-buttons">
-            <a href="#" class="header-btn">Вход</a>
+        <div class="header-wrap-buttons">
+            <div class="header-buttons">
+                <a href="#" class="header-btn">Вход</a>
+            </div>
+            <div class="header-buttons">
+                <router-link to="/registration" class="header-btn">Регистрация</router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -21,10 +26,14 @@
         flex-flow: row wrap;
         justify-content: space-between;
         padding: 5px 15px;
+        &-wrap-buttons {
+            display: flex;
+        }
         &-buttons {
             align-self: center;
         }
         &-btn {
+            margin-left: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
