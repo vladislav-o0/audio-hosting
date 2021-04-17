@@ -16,7 +16,7 @@
 <style lang="scss">
     .header {
         height: 50px;
-        border-bottom: 1px solid;
+        box-shadow: 0px 0px 6px;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;

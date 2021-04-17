@@ -2,10 +2,10 @@
     <audio @timeupdate="progressUpdate" id="audio" :src="currentAudio.src"></audio>
     <div class="player">
         <ul class="player-buttons">
-            <li @click="flipping" class="player-buttons-btn player-buttons-prev">prev</li>
-            <li @click="switchPlay" v-if="!play" class="player-buttons-btn player-buttons-play">Play</li>
-            <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play">Pause</li>
-            <li @click="flipping" class=" player-buttons-btn player-buttons-next">next</li>
+            <li @click="flipping" class="player-buttons-btn player-buttons-prev"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
+            <li @click="switchPlay" v-if="!play" class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/play.svg"></li>
+            <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/pause.svg"></li>
+            <li @click="flipping" class=" player-buttons-btn player-buttons-next"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
         </ul>
         <p class="player-txt">{{currentAudio.author}} - {{currentAudio.name}}</p>
         <div class="player-progress" @click="audioRewind">
@@ -40,6 +40,8 @@
             },
             flipping(e) {
                 let btn = e.target;
+                if (btn.tagName == 'IMG') btn = btn.parentNode;
+
                 let tracks = this.$store.getters.filteredTracks;
                 let indexCurrentAudio = tracks.indexOf(this.currentAudio);
           
@@ -111,14 +113,18 @@
         border-bottom: 1px solid;
         &-buttons {
             padding-left: 0;
+            margin: 35px 0px 0px;
             list-style: none;
             display: flex;
             width: 400px;
             align-items: center;
             justify-content: center;
+            &-img {
+                width: 50%;
+            }
             &-btn {
-                border-radius: 50px;
-                background-color: white;
+                cursor: pointer;
+                border: 2px solid;
                 color: #051e36;
                 display: flex;
                 justify-content: center;
@@ -133,6 +139,12 @@
                 width: 40px;
                 height: 40px;
             }
+            &-next {
+                transform: rotate(180deg);
+            }
+        }
+        &-txt {
+            margin: 18px 0 31px;
         }
         &-progress {
             width: 100%;
@@ -141,7 +153,7 @@
             text-align: center;
             position: relative;
             &-line {
-                background: #b388fe;
+                background: #061d36;
                 height: 100%;
                 width: 0;
             }

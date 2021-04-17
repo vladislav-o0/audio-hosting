@@ -1,7 +1,7 @@
 <template>
     <div class="audio">
-        <div @click="setPlay" v-if="!play" class="audio-btn">Play</div>
-        <div @click="setPause" v-else class="audio-btn">Pause</div>
+        <div @click="setPlay" v-if="!play" class="audio-btn"><img class="audio-btn-img" src="/icons/play.svg"></div>
+        <div @click="setPause" v-else class="audio-btn"><img class="audio-btn-img" src="/icons/pause.svg"></div>
         <div>{{audio.author}}</div>
         <div>{{audio.name}}</div>
     </div>
@@ -45,18 +45,19 @@
         width: 500px;
         height: 30px;
         background-color: #fff;
-        border-radius: 50px;
+        border-radius: 5px;
         margin: 15px;
         display: flex;
+        align-items: center;
         &-btn {
             width: 30px;
             height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: blue;
-            border-radius: 50px;
-            
+            &-img {
+                width: 50%;
+            }
         }
     }
 </style>
