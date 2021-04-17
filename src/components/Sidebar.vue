@@ -6,7 +6,11 @@
                 <p>Жанры:</p>
                 <label>
                     <input v-model="genres" type="checkbox" name="genre" value="pop">
-                    Попса
+                    Поп
+                </label>
+                <label>
+                    <input v-model="genres" type="checkbox" name="genre" value="club">
+                    Клубная
                 </label>
                 <label>
                     <input v-model="genres" type="checkbox" name="genre" value="rock">
@@ -15,6 +19,18 @@
                 <label>
                     <input v-model="genres" type="checkbox" name="genre" value="rap">
                     Реп
+                </label>
+                <label>
+                    <input v-model="genres" type="checkbox" name="genre" value="chanson">
+                    Шансон
+                </label>
+                <label>
+                    <input v-model="genres" type="checkbox" name="genre" value="classic">
+                    Классическая
+                </label>
+                <label>
+                    <input v-model="genres" type="checkbox" name="genre" value="electronic">
+                    Электронная
                 </label>
             </div>
             <button @click.prevent="setFilterParams">Применить</button>
