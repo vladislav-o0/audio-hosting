@@ -12,7 +12,7 @@
   import Player from '@/components/Player.vue';
   import Sidebar from '@/components/Sidebar.vue';
   import AudioList from '@/components/Audio-list.vue';
-
+  
   export default {
     data() {
       return {

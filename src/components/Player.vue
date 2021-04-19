@@ -26,6 +26,8 @@
         },
         computed: mapState({
             play: 'play',
+            user: 'user',
+            status: 'status',
             currentAudio(state) {
                 if (!state.currentAudio) return '';
                 return state.currentAudio;
