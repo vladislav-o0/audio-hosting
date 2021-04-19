@@ -10,9 +10,12 @@
                     <router-link to="/registration" class="header-btn">Регистрация</router-link>
                 </div>
             </div>
-            <a v-else class="header-btn" @click="logout">Logout</a>
+            <div v-else class="header-wrap-buttons">
+                <p>Вы вошли как {{user.name}}</p>
+                <a class="header-btn" @click="logout">Выйти</a>
+                <router-link to="/profile" class="header-btn">Профиль</router-link>
+            </div>
         </template>
-        <p v-if="isLoggedIn">Вы вошли как {{user.name}}</p>
     </div>
 </template>
 
@@ -43,6 +46,7 @@
         padding: 5px 15px;
         &-wrap-buttons {
             display: flex;
+            align-items: center;
         }
         &-buttons {
             align-self: center;
