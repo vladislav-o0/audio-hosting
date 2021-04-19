@@ -1,10 +1,14 @@
 <template>
-    <h1>This is auth component</h1>
+    <header-comp></header-comp>
 </template>
 
 <script>
+    import Header from '@/components/Header.vue';
+
     export default {
-        
+        components: {
+            'header-comp': Header
+        }
     }
 </script>
 

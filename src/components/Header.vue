@@ -13,7 +13,7 @@
             <div v-else class="header-wrap-buttons">
                 <p>Вы вошли как {{user.name}}</p>
                 <a class="header-btn" @click="logout">Выйти</a>
-                <router-link to="/profile" class="header-btn">Профиль</router-link>
+                <router-link :to="$route.path != '/'?'/':'/profile'" class="header-btn">{{$route.path != '/'?'На главную':'Профиль'}}</router-link>
             </div>
         </template>
     </div>
