@@ -1,5 +1,5 @@
 <template>
-    <audio @timeupdate="progressUpdate" id="audio" :src="currentAudio.src"></audio>
+    <audio @timeupdate="progressUpdate" id="audio" :src="currentAudioSrc"></audio>
     <div class="player">
         <ul class="player-buttons">
             <li @click="flipping" class="player-buttons-btn player-buttons-prev"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
@@ -24,7 +24,8 @@
                 time: ''
             }
         },
-        computed: mapState({
+        computed: {
+        ...mapState({
             play: 'play',
             user: 'user',
             status: 'status',
@@ -33,6 +34,11 @@
                 return state.currentAudio;
             }
         }),
+        currentAudioSrc() {
+            if (!this.currentAudio.src) return '';
+            return 'http://localhost:3000/' + this.currentAudio.src;
+        }
+        },
         methods: {
             switchPlay() { 
                 if (!this.$store.state.currentAudio) {//Включать первый трек при первом запуске

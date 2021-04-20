@@ -10,46 +10,26 @@ export default createStore({
     user : {},
     play: false,
     currentAudio: null,
+    genres: {
+      pop: 'Поп',
+      club: 'Клубная',
+      rock: 'Рок',
+      rap: 'Реп',
+      chanson: 'Шансон',
+      classic: 'Классическая',
+      electronic: 'Электронная'
+    },
     filterParams: {
       search: '',
-      genres: []
+      selectedGenres: []
     },
-    tracks: [{
-      name: 'Все что было',
-      author: 'Петр Лещенко',
-      src: 'audio/petr.mp3',
-      genre: 'pop'
-    }, {
-      name: 'Группа крови',
-      author: 'Виктор Цой',
-      src: 'audio/vik.mp3',
-      genre: 'rock'
-    }, {
-      name: 'Пачка сигарет',
-      author: 'Виктор Цой',
-      src: 'audio/vik2.mp3',
-      genre: 'rock'
-    }, {
-      name: 'Апрель',
-      author: 'Виктор Цой',
-      src: 'audio/vik3.mp3',
-      genre: 'rock'
-    }, {
-      name: 'Надя, надечка',
-      author: 'Петр Лещенко',
-      src: 'audio/petr2.mp3',
-      genre: 'pop'
-    },{
-      name: 'Эх, Андрюша',
-      author: 'Петр Лещенко',
-      src: 'audio/petr3.mp3',
-      genre: 'pop'
-    }]
+    tracks: []
   },
   mutations: {
     setAuthComp: state => state.authCompleted = !state.authCompleted,
     switchPlay: state => state.play = !state.play,
     setCurrent: (state, audio) => state.currentAudio = audio,
+    setTrackList: (state, list) => state.tracks = list,
     setFilterParams: (state, params) => {
       state.filterParams = params;
     },
@@ -77,6 +57,8 @@ export default createStore({
     filteredTracks(state) {
       let filteredTracks = state.tracks;
 
+      if (!filteredTracks.length) return filteredTracks;
+
       if (state.filterParams.search) {
         filteredTracks = filteredTracks.filter(item=>{
           return item.name.toLowerCase().includes(state.filterParams.search.toLowerCase()) || 
@@ -84,16 +66,16 @@ export default createStore({
         })
       }
       
-      if (state.filterParams.genres.length != 0) {
+      if (state.filterParams.selectedGenres.length != 0) {
         filteredTracks = filteredTracks.filter(item=>{
-          for (let i = 0; i < state.filterParams.genres.length; i++) {
-            if (state.filterParams.genres[i] == item.genre) return true;
+          for (let i = 0; i < state.filterParams.selectedGenres.length; i++) {
+            if (state.filterParams.selectedGenres[i] == item.genre) return true;
           }
         });
       }
-      
 
-      if (!filteredTracks.length) {
+      if (filteredTracks.length == 0) {
+        console.log(filteredTracks);
         console.log('Ничего не найдено'); //Показать пользователю, что ничего не найдено.
         return state.tracks;
       }
@@ -130,7 +112,7 @@ export default createStore({
               const token = resp.data.token
 
               localStorage.setItem('token', token)
-              // Add the following line:
+              
               axios.defaults.headers.common['Authorization'] = token
               commit('auth_success', resp.data)
               resolve(resp)
@@ -149,8 +131,12 @@ export default createStore({
         delete axios.defaults.headers.common['Authorization']
         resolve()
     })
-  }
-  },
-  modules: {
+   },
+   getTracks({commit}){
+      axios({url: 'http://localhost:3000/getTracks', method: 'GET'})
+      .then(res => {
+          commit('setTrackList', res.data);
+        })
+   }
   }
 })

@@ -8,9 +8,9 @@
 
       const token = localStorage.getItem('token');
       if (token) {
-        this.$http.defaults.headers.common['Authorization'] = token;
+        this.axios.defaults.headers.common['Authorization'] = token;
 
-        this.$http({url: 'http://localhost:3000/auth', method: 'GET'})
+        this.axios({url: 'http://localhost:3000/auth', method: 'GET'})
         .then(res => {
           this.$store.commit('auth_success', {user: res.data.user});
         }).finally(() => {
@@ -19,7 +19,8 @@
       } else {
         this.$store.commit('setAuthComp');
       }
-   
+
+      this.$store.dispatch('getTracks');
     }
   }
 </script>

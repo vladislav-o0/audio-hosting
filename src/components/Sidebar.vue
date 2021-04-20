@@ -4,33 +4,9 @@
             <input v-model="search" class="filter-search" type="text" placeholder="Исполнитель или название трека">
             <div class="filter-genre">
                 <p>Жанры:</p>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="pop">
-                    Поп
-                </label>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="club">
-                    Клубная
-                </label>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="rock">
-                    Рок
-                </label>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="rap">
-                    Реп
-                </label>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="chanson">
-                    Шансон
-                </label>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="classic">
-                    Классическая
-                </label>
-                <label>
-                    <input v-model="genres" type="checkbox" name="genre" value="electronic">
-                    Электронная
+                <label v-for="(value, key) in genres">
+                    <input v-model="selectedGenres" type="checkbox" name="genre" :value="key">
+                    {{value}}
                 </label>
             </div>
             <button @click.prevent="setFilterParams">Применить</button>
@@ -39,18 +15,21 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+
     export default {
         data() {
             return {
                 search: '',
-                genres: []
+                selectedGenres: []
             }
         },
+        computed: mapState(['genres']),
         methods: {
             setFilterParams() {
                 this.$store.commit('setFilterParams', {
                     search: this.search,
-                    genres: this.genres
+                    selectedGenres: this.selectedGenres
                 });
             }
         }
