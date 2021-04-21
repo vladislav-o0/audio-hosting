@@ -31,4 +31,8 @@
     margin: 0;
     padding: 0;
   }
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <header-comp/>
     <player-comp/>
-    <div class="main">
+    <div class="main wrapper">
         <audio-list-comp/>
         <sidebar-comp/>
     </div>

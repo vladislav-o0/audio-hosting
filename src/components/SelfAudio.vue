@@ -1,6 +1,6 @@
 <template>
     <div class="audio">
-        <div>{{audio.author}} - {{audio.name}}<span @click="remove(audio.src)">Удалить</span></div>
+        <div>{{audio.author}} - {{audio.name}}<span @click="remove(audio)">Удалить</span></div>
     </div>
 </template>
 
@@ -8,8 +8,8 @@
     export default {
         props: ['audio'],
         methods: {
-            remove(src) {
-                this.axios.post('http://localhost:3000/removeTrack', {src: src})
+            remove(audio) {
+                this.axios.post('http://localhost:3000/removeTrack', audio)
                 .then((res) => {
                     console.log('Успешно удален')
                     this.$store.dispatch('getTracks');
