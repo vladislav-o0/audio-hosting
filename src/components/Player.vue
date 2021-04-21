@@ -7,7 +7,7 @@
             <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/pause.svg"></li>
             <li @click="flipping" class=" player-buttons-btn player-buttons-next"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
         </ul>
-        <p class="player-txt">{{currentAudio.author}} - {{currentAudio.name}}</p>
+        <p class="player-txt">{{currentAudio.author}}<span v-if="currentAudio"> - </span>{{currentAudio.name}}</p>
         <div class="player-progress" @click="audioRewind">
             <span class="player-time">{{time}}</span>
             <div class="player-progress-line"></div>
@@ -131,6 +131,7 @@
                 width: 50%;
             }
             &-btn {
+                box-shadow: 0px 0px 8px;
                 cursor: pointer;
                 border: 2px solid;
                 color: #051e36;
@@ -146,6 +147,7 @@
             &-prev, &-next{
                 width: 40px;
                 height: 40px;
+                box-shadow: 0px 0px 5px;
             }
             &-next {
                 transform: rotate(180deg);

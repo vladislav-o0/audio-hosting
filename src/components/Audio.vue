@@ -2,8 +2,7 @@
     <div class="audio">
         <div @click="setPlay" v-if="!play" class="audio-btn"><img class="audio-btn-img" src="/icons/play.svg"></div>
         <div @click="setPause" v-else class="audio-btn"><img class="audio-btn-img" src="/icons/pause.svg"></div>
-        <div>{{audio.author}}</div>
-        <div>{{audio.name}}</div>
+        <div>{{audio.author}} - {{audio.name}}</div>
     </div>
 </template>
 
@@ -42,6 +41,7 @@
 
 <style lang="scss">
     .audio {
+        box-shadow: 0px 0px 7px;
         width: 500px;
         height: 30px;
         background-color: #fff;
