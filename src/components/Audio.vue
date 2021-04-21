@@ -39,7 +39,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .audio {
         box-shadow: 0px 0px 7px;
         width: 500px;

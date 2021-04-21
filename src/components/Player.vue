@@ -70,6 +70,10 @@
                 }
             },
             progressUpdate(e) {
+                if (this.$route.path != '/') { //Переключаем кнопку если перешли на другую вкладку
+                    this.switchPlay();
+                    return;
+                }
                 let audioElem = e.target;
                 let progressElem = document.querySelector('.player-progress');
                 let progressLineElem = document.querySelector('.player-progress-line');

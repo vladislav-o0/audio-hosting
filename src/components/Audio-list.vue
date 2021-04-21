@@ -1,20 +1,42 @@
 <template>
     <div class="audio-list">
         <transition-group appear @before-leave="beforeLeave"  tag="div">
-        <audio-comp v-for="(track) in filteredTracks" :key="track.name" :audio="track"></audio-comp>
+        <component :is="currentComponent" v-for="(track) in filtered" :key="track.name" :audio="track"></component>
         </transition-group>
     </div>
 </template>
 
 <script>
     import Audio from '@/components/Audio.vue';
+    import SelfAudio from '@/components/SelfAudio.vue';
 
     import { mapGetters } from 'vuex';
+    import { mapState } from 'vuex';
+
     export default {
         components: {
-            'audio-comp': Audio
+            'audio-comp': Audio,
+            'self-audio-comp': SelfAudio
         },
-        computed: mapGetters(['filteredTracks']),
+        computed: {
+            ...mapState(['user']),
+            ...mapGetters(['filteredTracks']),
+            filtered() {
+                let path = this.$route.path;
+
+                if (path != '/profile') return this.filteredTracks;
+
+                return this.filteredTracks.filter((item) => { //Отсортировать чужие аудио
+                    return item.user_id == this.user.id;
+                });
+            },
+            currentComponent() {
+                let path = this.$route.path;
+
+                if (path == '/') return 'audio-comp';
+                else return 'self-audio-comp';
+            }
+        },
         methods: {        
             beforeLeave(el) {
                 let {marginLeft, marginTop} = window.getComputedStyle(el);
