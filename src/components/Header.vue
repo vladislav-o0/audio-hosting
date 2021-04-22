@@ -58,10 +58,11 @@
             align-items: center;
             text-decoration: none;
             width: 100px;
-            height: 35px;
+            height: 30px;
             border: 2px solid;
             color: white;
             transition: 0.1s;
+            padding: 0 8px;
         }
         &-btn:hover {
             color: #051e36;

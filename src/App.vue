@@ -30,6 +30,7 @@
     background: linear-gradient(90deg, #1ae7be, #09b2bf);
     margin: 0;
     padding: 0;
+    font-family: 'Open Sans', sans-serif;
   }
   .wrapper {
     max-width: 900px;
