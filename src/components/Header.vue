@@ -52,20 +52,19 @@
             align-self: center;
         }
         &-btn {
-            margin-left: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-left: 15px;
             text-decoration: none;
-            width: 100px;
-            height: 30px;
-            border: 2px solid;
-            color: white;
-            transition: 0.1s;
-            padding: 0 8px;
-        }
-        &-btn:hover {
-            color: #051e36;
+            width: 125px;
+            height: 40px;
+            background-color: #051d36;
+            border: none;
+            color: wheat;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
         }
         &-logo {
             height: 100%;

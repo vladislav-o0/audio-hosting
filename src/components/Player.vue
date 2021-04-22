@@ -2,10 +2,10 @@
     <audio @timeupdate="progressUpdate" id="audio" :src="currentAudioSrc"></audio>
     <div class="player">
         <ul class="player-buttons">
-            <li @click="flipping" class="player-buttons-btn player-buttons-prev"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
-            <li @click="switchPlay" v-if="!play" class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/play.svg"></li>
-            <li @click="switchPlay" v-else class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/pause.svg"></li>
-            <li @click="flipping" class=" player-buttons-btn player-buttons-next"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
+            <li @click="flipping" @mousedown.prevent class="player-buttons-btn player-buttons-prev"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
+            <li @click="switchPlay" @mousedown.prevent v-if="!play" class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/play.svg"></li>
+            <li @click="switchPlay" @mousedown.prevent v-else class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/pause.svg"></li>
+            <li @click="flipping" @mousedown.prevent class=" player-buttons-btn player-buttons-next"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
         </ul>
         <p class="player-txt">{{currentAudio.author}}<span v-if="currentAudio"> - </span>{{currentAudio.name}}</p>
         <div class="player-progress" @click="audioRewind">
@@ -122,7 +122,6 @@
         display: flex;
         flex-flow: column wrap;
         align-items: center;
-        border-bottom: 1px solid;
         &-buttons {
             padding-left: 0;
             margin: 35px 0px 0px;

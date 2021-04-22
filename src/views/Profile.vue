@@ -1,7 +1,9 @@
 <template>
     <header-comp></header-comp>
-    <upload-comp></upload-comp>
-    <audio-list-comp></audio-list-comp>
+    <div class="wrapper">
+        <upload-comp></upload-comp>
+        <audio-list-comp></audio-list-comp>
+    </div>
 </template>
 
 <script>
@@ -18,6 +20,10 @@
     }
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+    .wrapper {
+        padding-top: 50px;
+        display: flex;
+        justify-content: center;
+    }
 </style>

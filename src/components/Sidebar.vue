@@ -52,21 +52,15 @@
         flex-flow: column;
         align-items: center;
         &-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100px;
-            height: 35px;
-            border: 2px solid white;
-            color: white;
-            background-color: transparent;
-            margin-top: 18px;
+            width: 118px;
+            height: 42px;
+            background-color: #051d36;
+            border: none;
+            color: wheat;
+            border-radius: 5px;
             cursor: pointer;
+            margin-top: 17px;
             outline: none;
-            &:hover {
-                color: black;
-                border-color: black;
-            }
         }
         &-search {
             border: none;
@@ -93,7 +87,7 @@
             }
             &-label {
                 font-size: 14px;
-                background-color: white;
+                background-color: rgba(255,255,255,.7);
                 border-radius: 5px;
                 height: 30px;
                 margin: 4px;
@@ -107,8 +101,7 @@
                 justify-content: center;
                 align-items: center;
                 &-checked {
-                    background-color: #051d36;
-                    color: white;
+                    background-color: white;
                 }
             }
         }

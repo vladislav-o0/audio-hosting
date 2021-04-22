@@ -11,6 +11,7 @@ export default createStore({
     play: false,
     currentAudio: null,
     genres: {
+      default: 'Жанр',
       pop: 'Поп',
       club: 'Клубная',
       rock: 'Рок',

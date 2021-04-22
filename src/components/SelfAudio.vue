@@ -1,6 +1,6 @@
 <template>
     <div class="audio">
-        <div>{{audio.author}} - {{audio.name}}<span @click="remove(audio)">Удалить</span></div>
+        <p>{{audio.author}} - {{audio.name}}</p><span @click="remove(audio)" class="audio-remove">Удалить</span>
     </div>
 </template>
 
@@ -28,7 +28,16 @@
         border-radius: 5px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin: 10px 0;
         padding: 0 15px;
+        &-remove {
+            background-color: #051d36;
+            color: white;
+            padding: 2px 19px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer; 
+        }
     }
 </style>

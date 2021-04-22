@@ -1,26 +1,16 @@
 <template>
-    <div class="reg-wrapper">
-        <router-link class="reg-back" to="/">Назад</router-link>
-        <form class="reg-form" @submit.prevent="register">
-            <label for="name">Имя</label>
-            <div>
-                <input class="reg-input" id="name" type="text" v-model="name" required autofocus>
-            </div>
-            <label for="email" >E-Mail Address</label>
-            <div>
-                <input class="reg-input" id="email" type="email" v-model="email" required>
-            </div>    
-            <label for="password">Пароль</label>
-            <div>
-                <input class="reg-input" id="password" type="password" v-model="password" required>
-            </div>   
-            <label for="password-confirm">Повторите пароль</label>
-            <div>
-                <input class="reg-input" id="password-confirm" type="password" v-model="password_confirmation" required>
-            </div>
-            <div>
-                <button type="submit">Зарегистрироваться</button>
-            </div>
+    <div class="form-wrap">
+        <form class="form" @submit.prevent="register">
+            <router-link class="form-btn form-btn-back" to="/">Назад</router-link>
+            <h1 class="form-header">Регистрация</h1>
+            <input class="form-input" id="name" type="text" v-model="name" placeholder="Имя" required autofocus>
+    
+            <input class="form-input" id="email" type="email" v-model="email" placeholder="Email" required>       
+        
+            <input class="form-input" id="password" type="password" v-model="password" placeholder="Пароль" required>
+        
+            <input class="form-input" id="password-confirm" type="password" v-model="password_confirmation" placeholder="Повторите пароль" required>
+            <button class="form-btn" type="submit">Зарегистрироваться</button>
         </form>
     </div>
 </template>
@@ -51,25 +41,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    .reg {
-        &-back {
-            text-decoration: none;
-            position: absolute;
-            top: 50px;
-            font-size: 20px;
-            left: 50px;
-        }
-        &-wrapper {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        &-input {
-            border-radius: 5px;
-            border: 2px solid;
-        }
-    }
-</style>
