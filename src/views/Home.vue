@@ -32,5 +32,6 @@
     .main {
         display: flex;
         justify-content: space-between;
+        padding-top: 25px;
     }
 </style>

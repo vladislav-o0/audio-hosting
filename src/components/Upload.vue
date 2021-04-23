@@ -8,7 +8,7 @@
         </select>
         <input @change="selectedFile" class="form-input file" id="uploadFile" hidden type="file" name="file">
         <label class="uploadFile form-input"  for="uploadFile">{{fileName}}</label>
-        <input type="submit" class="form-btn" value="Отправить">
+        <input type="submit" class="form-btn" value="Добавить">
     </form>
 </template>
 

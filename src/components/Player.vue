@@ -162,13 +162,19 @@
         &-progress {
             width: 100%;
             height: 15px;
-            background: #e980fb;
+            background: white;
             text-align: center;
             position: relative;
+            display: flex;
+            align-items: center;
+            box-shadow: inset 0px 0px 15px -6px;
+            cursor: pointer;
             &-line {
-                background: #061d36;
-                height: 100%;
+                background: #ffbf00bf;
                 width: 0;
+                height: 96%;
+                border-radius: 0 5px 5px 0;
+                box-shadow: 1px 0 10px -3px;
             }
         }
         &-time {
