@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div v-else class="header-wrap-buttons">
-                <p>Вы вошли как {{user.name}}</p>
+                <p>Вы вошли как <span class="header-nickname">{{user.name}}</span></p>
                 <a class="header-btn" @click="logout">Выйти</a>
                 <router-link :to="$route.path != '/'?'/':'/profile'" class="header-btn">{{$route.path != '/'?'На главную':'Профиль'}}</router-link>
             </div>
@@ -37,6 +37,10 @@
 
 <style lang="scss">
     .header {
+        &-nickname {
+            font-weight: 799;
+            padding-right: 10px;
+        }
         height: 50px;
         box-shadow: 0px 0px 6px;
         display: flex;
