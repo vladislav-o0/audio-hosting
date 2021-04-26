@@ -25,7 +25,17 @@
             }
         },
         computed: {
-            ...mapState(['genres'])
+            ...mapState({
+                genres(state) {
+                    let res = {};
+                    for(let genre in state.genres) {
+                        if (genre != 'default') {
+                            res[genre] = state.genres[genre];
+                        }
+                    }
+                    return res;
+                }
+            })
         },
         methods: {
             toggleActive(genre) {

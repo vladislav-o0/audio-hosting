@@ -1,6 +1,6 @@
 <template>
-    <div class="audio-list">
-        <transition-group appear @before-leave="beforeLeave"  tag="div">
+    <div class="audio-list" :class="audioListState">
+        <transition-group appear @before-leave="beforeLeave" @before-enter="beforeEnter" tag="div">
         <component :is="currentComponent" v-for="(track) in filtered" :key="track.name" :audio="track"></component>
         </transition-group>
     </div>
@@ -14,6 +14,11 @@
     import { mapState } from 'vuex';
 
     export default {
+        data() {
+            return {
+               audioFirstAdd: false 
+            }
+        },
         components: {
             'audio-comp': Audio,
             'self-audio-comp': SelfAudio
@@ -29,6 +34,11 @@
                 return this.filteredTracks.filter((item) => { //Отсортировать чужие аудио
                     return item.user_id == this.user.id;
                 });
+            
+            },
+            audioListState() {
+                if (this.filtered.length) return 'audio-list-opened';
+                return 'audio-list-closed';
             },
             currentComponent() {
                 let path = this.$route.path;
@@ -37,13 +47,30 @@
                 else return 'self-audio-comp';
             }
         },
-        methods: {        
+        methods: {       
             beforeLeave(el) {
                 let {marginLeft, marginTop} = window.getComputedStyle(el);
               
                 el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
                 el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`; 
-            }  
+            },
+            beforeEnter(el) {
+                if (this.audioFirstAdd && this.$route.path == '/profile') {
+
+                    el.addEventListener('transitionend', () => {
+                        el.style.transitionDelay = '';
+                        if (this.audioFirstAdd) this.audioFirstAdd = false;
+                    }, {once: true});
+
+                    el.style.transitionDelay = '.8s';
+                    
+                }
+            }
+        },
+        watch: {
+            audioListState(newV, oldV) {
+                if (oldV == 'audio-list-closed') this.audioFirstAdd = true;
+            }
         }
     }
 </script>
@@ -62,4 +89,14 @@
     .v-leave-active {
         position: absolute;
     }  
+    .audio-list {
+        transition: 1s;
+    }
+    .audio-list-closed {
+        width: 0;
+    }
+    .audio-list-opened {
+        width: 380px;
+    }
+
 </style>

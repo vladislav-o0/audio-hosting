@@ -20,7 +20,7 @@
         this.$store.commit('setAuthComp');
       }
 
-      this.$store.dispatch('getTracks');
+      this.$store.dispatch('getTracks')
     }
   }
 </script>

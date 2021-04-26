@@ -2,7 +2,7 @@
     <header-comp></header-comp>
     <div class="wrapper">
         <upload-comp></upload-comp>
-        <audio-list-comp></audio-list-comp>
+            <audio-list-comp></audio-list-comp>
     </div>
 </template>
 
@@ -25,5 +25,12 @@
         padding-top: 50px;
         display: flex;
         justify-content: center;
+    }
+    .audio-list-wrapper {
+        width: 400px;
+        overflow: hidden;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 10px 0 10px;
     }
 </style>
