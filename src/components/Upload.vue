@@ -8,20 +8,31 @@
         </select>
         <input @change="selectedFile" class="form-input file" id="uploadFile" hidden type="file" name="file">
         <label class="uploadFile form-input"  for="uploadFile">{{fileName}}</label>
-        <input type="submit" class="form-btn" value="Добавить">
+        <input type="submit" :style="uploadBtnColor" class="form-btn" :value="uploadStatus">
     </form>
 </template>
 
 <script>
     import { mapState } from 'vuex';
+    import { backendHostname } from '@/backendHostname.js';
 
     export default {
         data() {
             return {
-                fileName: 'Выберите аудио'
+                fileName: 'Выберите аудио',
+                uploadPercentage: 0,
+                isUpload: false
             }
         },
-        computed: mapState(['genres']),
+        computed: {
+            ...mapState(['genres']),
+            uploadBtnColor() {
+                return {background: `linear-gradient(to right, #36b23a ${this.uploadPercentage}%, #051d36 ${this.uploadPercentage}%)`}
+            },
+            uploadStatus() {
+                return this.isUpload?'Загружается...':'Добавить';
+            }
+        },
         methods: {
             selectedFile(e) {
                 let files = e.target.files;
@@ -32,13 +43,25 @@
             upload() {
                 let form = document.getElementById('uploadForm');
                 let formData = new FormData(form);
-
                 let checkFormSuccess = this.checkForm();
 
                 if (!checkFormSuccess) return;
-                
-                this.axios.post('http://localhost:3000/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+
+                this.isUpload = true;
+
+                this.axios.post(
+                    backendHostname + '/upload',
+                    formData,
+                    {
+                        headers: {'Content-Type': 'multipart/form-data'},
+                        onUploadProgress: function (progressEvent) {
+                            this.uploadPercentage = Math.round(( progressEvent.loaded / progressEvent.total) * 100);
+                        }.bind(this)
+                    }
+                )
                 .then(() => {
+                    this.uploadPercentage = 0;
+                    this.isUpload = false;
                     this.$store.dispatch('getTracks');
                   console.log('SUCCESS!!');
                 })
@@ -53,7 +76,6 @@
                 let genres = document.querySelector('.genres');
                 let file = document.querySelector('.file');
 
- 
                 let resultOfChecking = true;
 
                 if (!author.value) resultOfChecking =  showError(author);

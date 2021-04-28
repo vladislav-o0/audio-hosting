@@ -25,13 +25,14 @@
         },
         computed: {
             ...mapState(['user']),
-            ...mapGetters(['filteredTracks']),
+            ...mapGetters(['filtration']),
             filtered() {
+                console.log(this.filtration)
                 let path = this.$route.path;
 
-                if (path != '/profile') return this.filteredTracks;
+                if (path != '/profile') return this.filtration.filteredTracks;
 
-                return this.filteredTracks.filter((item) => { //Отсортировать чужие аудио
+                return this.filtration.filteredTracks.filter((item) => { //Отсортировать чужие аудио
                     return item.user_id == this.user.id;
                 });
             
@@ -63,7 +64,7 @@
                     }, {once: true});
 
                     el.style.transitionDelay = '.8s';
-                    
+
                 }
             }
         },

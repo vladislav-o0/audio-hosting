@@ -3,14 +3,16 @@
 </template>
 
 <script>
-  export default {
-    beforeCreate() {
+  import { backendHostname } from '@/backendHostname.js';
 
+  export default {
+
+    beforeCreate() {
       const token = localStorage.getItem('token');
       if (token) {
         this.axios.defaults.headers.common['Authorization'] = token;
 
-        this.axios({url: 'http://localhost:3000/auth', method: 'GET'})
+        this.axios({url: backendHostname + '/auth', method: 'GET'})
         .then(res => {
           this.$store.commit('auth_success', {user: res.data.user});
         }).finally(() => {

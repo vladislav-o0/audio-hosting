@@ -17,6 +17,7 @@
 
 <script>
     import { mapState, mapMutations } from 'vuex';
+    import { backendHostname } from '@/backendHostname.js';
 
     export default {
         data() {
@@ -36,7 +37,7 @@
         }),
         currentAudioSrc() {
             if (!this.currentAudio.src) return '';
-            return 'http://localhost:3000/' + this.currentAudio.src;
+            return backendHostname + '/' + this.currentAudio.src;
         }
         },
         methods: {

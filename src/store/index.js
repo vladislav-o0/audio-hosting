@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios';
+import { backendHostname } from '@/backendHostname.js';
 
 export default createStore({
   state: {
@@ -55,10 +56,14 @@ export default createStore({
     }
   },
   getters: {
-    filteredTracks(state) {
+    filtration(state) {
       let filteredTracks = state.tracks;
+      let filterStatus = 'success';
 
-      if (!filteredTracks.length) return filteredTracks;
+      if (!filteredTracks.length) return  {
+                                            filteredTracks,
+                                            filterStatus
+                                          };
 
       if (state.filterParams.search) {
         filteredTracks = filteredTracks.filter(item=>{
@@ -77,10 +82,17 @@ export default createStore({
 
       if (filteredTracks.length == 0) {
         console.log(filteredTracks);
-        console.log('Ничего не найдено'); //Показать пользователю, что ничего не найдено.
-        return state.tracks;
+        console.log(this)
+        filterStatus = 'fail'; //Показать пользователю, что ничего не найдено.
+        return {
+          filteredTracks: state.tracks,
+          filterStatus
+        };
       }
-      return filteredTracks;
+      return {
+        filteredTracks,
+        filterStatus
+      };
     },
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status
@@ -89,7 +101,7 @@ export default createStore({
     register({commit}, user){
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({url: 'http://localhost:3000/registration', data: user, method: 'POST' })
+        axios({url: backendHostname + '/registration', data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.token
 
@@ -108,7 +120,7 @@ export default createStore({
      login({commit}, user){
       return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios({url: 'http://localhost:3000/login', data: user, method: 'POST' })
+          axios({url: backendHostname + '/login', data: user, method: 'POST' })
           .then(resp => {
               const token = resp.data.token
 
@@ -134,7 +146,7 @@ export default createStore({
     })
    },
    getTracks({commit}){
-      axios({url: 'http://localhost:3000/getTracks', method: 'GET'})
+      axios({url: backendHostname + '/getTracks', method: 'GET'})
       .then(res => {
           commit('setTrackList', res.data);
         })

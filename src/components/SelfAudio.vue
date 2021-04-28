@@ -5,11 +5,13 @@
 </template>
 
 <script>
+    import { backendHostname } from '@/backendHostname.js';
+
     export default {
         props: ['audio'],
         methods: {
             remove(audio) {
-                this.axios.post('http://localhost:3000/removeTrack', audio)
+                this.axios.post(backendHostname + '/removeTrack', audio)
                 .then((res) => {
                     console.log('Успешно удален')
                     this.$store.dispatch('getTracks');

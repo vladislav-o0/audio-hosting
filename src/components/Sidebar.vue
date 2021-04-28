@@ -3,7 +3,10 @@
         <form class="filter" action="">
             <input v-model="search" class="filter-search" type="text" placeholder="Исполнитель или название трека">
             <div class="filter-genre">
-                <h3 class="filter-genre-title">Жанры</h3>
+                <transition>
+                    <h3 v-if="filtration.filterStatus == 'success'" class="filter-genre-title">Жанры</h3>
+                    <h3 v-else class="filter-genre-title">Ничего не найдено</h3>
+                </transition>
                 <label @mousedown.prevent class="filter-genre-label" v-for="(value, key) in genres" :class="toggleActive(key)">
                     <input v-model="selectedGenres" hidden type="checkbox" name="genre" :value="key">
                     {{value}}
@@ -16,6 +19,7 @@
 
 <script>
     import { mapState } from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         data() {
@@ -35,7 +39,8 @@
                     }
                     return res;
                 }
-            })
+            }),
+            ...mapGetters(['filtration'])
         },
         methods: {
             toggleActive(genre) {
@@ -89,6 +94,8 @@
             display: flex;
             flex-flow: row wrap;
             margin: 0 -4px;
+            overflow: hidden;
+            position: relative;
             &-title {
                 width: 100%;
                 text-align: center;

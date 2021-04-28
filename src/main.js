@@ -5,4 +5,6 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-window.vm = createApp(App).use(VueAxios, axios).use(store).use(router).mount('#app')
+
+createApp(App).use(VueAxios, axios).use(store).use(router).mount('#app');
+
