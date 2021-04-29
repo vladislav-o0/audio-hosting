@@ -51,7 +51,7 @@
                 let btn = e.target;
                 if (btn.tagName == 'IMG') btn = btn.parentNode;
 
-                let tracks = this.$store.getters.filteredTracks;
+                let tracks = this.$store.getters.filtration.filteredTracks;
                 let indexCurrentAudio = tracks.indexOf(this.currentAudio);
           
   
