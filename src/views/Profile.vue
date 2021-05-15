@@ -25,6 +25,10 @@
         padding-top: 50px;
         display: flex;
         justify-content: center;
+        @media (max-width: 730px) {
+            flex-flow: column wrap;
+            align-items: center;
+        }
     }
     .audio-list-wrapper {
         width: 400px;
@@ -33,4 +37,9 @@
         justify-content: flex-end;
         padding: 0 10px 0 10px;
     }
+    .audio-list-opened {
+            @media (min-width: 600px) and (max-width: 850px) {
+                width: 350px;
+            }
+        }
 </style>

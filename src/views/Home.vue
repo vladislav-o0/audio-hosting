@@ -33,5 +33,9 @@
         display: flex;
         justify-content: space-between;
         padding-top: 25px;
+        @media (max-width: 850px) {
+          flex-flow: column-reverse wrap;
+          align-items: center;
+        }
     }
 </style>

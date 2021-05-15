@@ -77,6 +77,7 @@
 </script>
 
 <style lang="scss">
+
     .v-leave-to, .v-enter-from {
         transform: translateX(-15px);
         opacity: 0;
@@ -92,12 +93,18 @@
     }  
     .audio-list {
         transition: 1s;
+        position: relative;
     }
     .audio-list-closed {
+        transition-delay: 2s;
         width: 0;
     }
     .audio-list-opened {
         width: 380px;
+        max-width: 100%;
+        @media (min-width: 600px) and (max-width: 850px) {
+            width: 550px;
+        }
     }
 
 </style>

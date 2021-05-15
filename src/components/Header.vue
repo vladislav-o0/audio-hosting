@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div v-else class="header-wrap-buttons">
-                <p>Вы вошли как <span class="header-nickname">{{user.name}}</span></p>
+                <p class="header-who-you">Вы вошли как <span class="header-nickname">{{user.name}}</span></p>
                 <a class="header-btn" @click="logout">Выйти</a>
                 <router-link :to="$route.path != '/'?'/':'/profile'" class="header-btn">{{$route.path != '/'?'На главную':'Профиль'}}</router-link>
             </div>
@@ -40,17 +40,44 @@
         &-nickname {
             font-weight: 799;
             padding-right: 10px;
+            @media (max-width: 670px) {
+                padding: 0;
+            }
+        }
+        &-who-you {
+            @media (max-width: 670px) {
+                width: 100%;
+                text-align: right;
+                margin: 0 0 10px;
+            }
+            @media (max-width: 430px) {
+                text-align: center;
+            }
         }
         height: 50px;
         box-shadow: 0px 0px 6px;
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: row nowrap;
         align-items: center;
         justify-content: space-between;
         padding: 5px 15px;
+        @media (max-width: 670px) {
+            height: 78px;
+        }
+        @media (max-width: 430px) {
+            flex-flow: column wrap;
+            height: 146px;
+            padding: 10px 0;
+        }
         &-wrap-buttons {
             display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-end;
             align-items: center;
+            @media (max-width: 430px) {
+                width: 100%;
+                justify-content: space-evenly;
+            }
         }
         &-buttons {
             align-self: center;
@@ -69,11 +96,20 @@
             border-radius: 5px;
             cursor: pointer;
             outline: none;
+            @media (max-width: 430px) {
+                margin: 0;
+            }
         }
         &-logo {
             height: 100%;
             object-fit: contain;
             color: white;
+            @media (max-width: 670px) {
+                height: 90%;
+            }
+            @media (max-width: 430px) {
+                height: 70px;
+            }
         }
     }
 </style>

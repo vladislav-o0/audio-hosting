@@ -59,7 +59,10 @@
 <style lang="scss">
     .sidebar {
         width: 300px;
-        height: 50px;
+        max-width: 100%;
+        @media (max-width: 850px) {
+            padding-bottom: 15px;
+        }
     }
     .filter {
         display: flex;

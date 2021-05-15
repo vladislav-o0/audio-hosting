@@ -2,7 +2,9 @@
     <div class="audio">
         <div @click="setPlay" v-if="!play" class="audio-btn"><img class="audio-btn-img" src="/icons/play.svg"></div>
         <div @click="setPause" v-else class="audio-btn"><img class="audio-btn-img" src="/icons/pause.svg"></div>
-        <div>{{audio.author}} - {{audio.name}}</div>
+        <p @mouseover="textMoveOn" @mouseout="textMoveOff" class="audio-paragraph" ref="audioNameWrapper">
+            <span ref="audioName">{{audio.author + ' - ' + audio.name}}</span>
+        </p>
     </div>
 </template>
 
@@ -11,6 +13,13 @@
 
     export default {
         props: ['audio'],
+        data() {
+            return {
+                audioNameWrapperEl: null,
+                audioNameEl: null,
+                textMoveStopped: false
+            }
+        },
         computed: mapState({
             play(state) {
                 if (state.currentAudio == this.audio && state.play) return true;
@@ -34,7 +43,47 @@
             },
             setPause() {
                 this.switchPlay();
+            },
+            textMoveOn() {
+                    let text = this.audioNameEl;
+                    let wrapper = this.audioNameWrapperEl;
+                    let stop = this.textMoveStopped;
+ 
+                    if (stop) {
+                        this.textMoveStopped = false;
+                        return;
+                    }
+
+                    text.style.transition = '2s';
+
+                    let width = text.offsetWidth - wrapper.offsetWidth;
+
+                    if (width < 0) return;
+
+                    text.style.transform = 'translateX(' + -width + 'px)';
+                    
+                    setTimeout(() => {
+                        text.style.transition = '0s';
+                        text.style.transform = 'translateX(0px)';
+                        setTimeout(this.textMoveOn, 500);
+                    }, 2500);
+            },
+            textMoveOff() {
+                this.textMoveStopped = true;
             }
+        },
+        mounted() {
+            this.audioNameEl = this.$refs.audioName;
+           
+            if (this.$refs.audioNameWrapper.offsetWidth) {
+                this.audioNameWrapperEl = this.$refs.audioNameWrapper;
+         
+                return this.audioNameWrapperEl;
+            } //если анимации нет, значит ширина доступна сразу
+
+            setTimeout(() => {
+                this.audioNameWrapperEl = this.$refs.audioNameWrapper
+            }, 1000); //иначе ширина доступна после завершения анимации
         }
     }
 </script>
@@ -49,6 +98,18 @@
         margin: 15px;
         display: flex;
         align-items: center;
+        @media (max-width: 850px) {
+            margin: 15px 0;
+            width: 100%;
+        }
+        &-paragraph {
+            white-space: nowrap;
+            width: 90%;
+            overflow: hidden;
+            span {
+                display: inline-block;
+            }
+        }
         &-btn {
             width: 30px;
             height: 30px;

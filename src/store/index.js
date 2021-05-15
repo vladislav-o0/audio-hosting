@@ -53,6 +53,9 @@ export default createStore({
       state.token = '';
       state.user = {};
       state.isLoggedIn = false;
+    },
+    setFilterStatus(state, value) {
+      state.filterStatus = value;
     }
   },
   getters: {
@@ -84,10 +87,12 @@ export default createStore({
         console.log(filteredTracks);
         console.log(this)
         filterStatus = 'fail'; //Показать пользователю, что ничего не найдено.
+
         return {
           filteredTracks: state.tracks,
           filterStatus
         };
+
       }
       return {
         filteredTracks,

@@ -130,6 +130,7 @@
             list-style: none;
             display: flex;
             width: 400px;
+            max-width: 100%;
             align-items: center;
             justify-content: center;
             &-img {

@@ -37,6 +37,7 @@
   .wrapper {
     max-width: 900px;
     margin: 0 auto;
+    padding: 0 10px;
   }
   .form {
         display: flex;
@@ -45,11 +46,13 @@
         justify-content: center;
         background-color: rgba(255,255,255,.6);
         width: 400px;
+        max-width: 100%;
         padding: 100px 0px;
         border-radius: 5px;
         border: 2px solid rgba(255, 255, 255, 0.6);
         position: relative;
         box-shadow: 0px 0px 8px;
+        margin: 0 15px;
         &-wrap {
             height: 100vh;
             display: flex;
@@ -96,6 +99,9 @@
             margin-top: 0;
             font-size: 44px;
             color: #051d36;
+            @media (max-width: 330px) {
+              font-size: 38px;
+            }
         }
     }
 </style>

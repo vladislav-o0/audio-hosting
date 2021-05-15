@@ -102,6 +102,11 @@
         margin: 10px 50px 0 0;
         padding: 40px 0;
         max-width: 300px;
+        @media (max-width: 730px) {
+            margin: 0 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
     }
     input, select, .uploadFile {
     padding: 0 10px;
