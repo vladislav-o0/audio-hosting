@@ -1,10 +1,10 @@
 <template>
     <form class="uploadForm form" @submit.prevent="upload" id="uploadForm" enctype="multipart/form-data">
         <h3 class="form-header">Добавить трек</h3>
-        <input type="text" class="form-input author" name="author" placeholder="Автор">
-        <input type="text" class="form-input name"  name="name" placeholder="Название">
+        <input type="text" class="form-input author" maxlength="40" name="author" placeholder="Автор">
+        <input type="text" class="form-input name" maxlength="40"  name="name" placeholder="Название">
         <select name="genre" class="form-input genres">
-            <option v-for="(value, key) in genres" :disabled="key == 'default'" :selected="key == 'default'" :value="key">{{value}}</option>
+            <option v-for="(value, key) in genres" :selected="key == 'default'" :value="key">{{value}}</option>
         </select>
         <input @change="selectedFile" class="form-input file" id="uploadFile" hidden type="file" name="file">
         <label class="uploadFile form-input"  for="uploadFile">{{fileName}}</label>
@@ -42,12 +42,17 @@
             },
             upload() {
                 let form = document.getElementById('uploadForm');
+                let selectGenres = form.querySelectorAll('select');
                 let formData = new FormData(form);
                 let checkFormSuccess = this.checkForm();
 
                 if (!checkFormSuccess) return;
 
-                this.isUpload = true;
+                form.reset();
+                this.fileName = 'Выберите аудио';
+                selectGenres.value = "default";
+
+                this.isUpload = true; //для изменения надписи на кнопке
 
                 this.axios.post(
                     backendHostname + '/upload',
@@ -84,9 +89,13 @@
                 if (!file.files.length) resultOfChecking = showError(file.labels[0]);
 
                 return resultOfChecking;
+
                 function showError(el) {
+   
                     el.addEventListener('transitionend', () => el.classList.remove('error'), {once: true});
+
                     el.classList.add('error');
+ 
                     return false;
                 }
              }

@@ -112,7 +112,7 @@ export default createStore({
 
           localStorage.setItem('token', token)
           axios.defaults.headers.common['Authorization'] = token
-          commit('auth_success', resp.data)//r
+          commit('auth_success', resp.data)
           resolve(resp)
         })
         .catch(err => {

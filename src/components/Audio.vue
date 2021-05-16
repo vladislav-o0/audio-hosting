@@ -93,6 +93,8 @@
         box-shadow: 0px 0px 7px;
         width: 500px;
         height: 30px;
+        padding-right: 10px;
+        box-sizing: border-box;
         background-color: #fff;
         border-radius: 5px;
         margin: 15px;
