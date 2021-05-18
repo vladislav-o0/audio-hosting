@@ -7,7 +7,7 @@
             <li @click="switchPlay" @mousedown.prevent v-else class="player-buttons-btn player-buttons-play"><img class="player-buttons-img" src="/icons/pause.svg"></li>
             <li @click="flipping" @mousedown.prevent class=" player-buttons-btn player-buttons-next"><img class="player-buttons-img" src="/icons/arrow.svg"></li>
         </ul>
-        <p class="player-txt">{{currentAudio.author}}<span v-if="currentAudio"> - </span>{{currentAudio.name}}</p>
+        <p class="player-txt" ref="textAudioNameWrapperEl"><span ref="textAudioNameEl" v-if="currentAudio">{{currentAudio.author}} - {{currentAudio.name}}</span></p>
         <div class="player-progress" @click="audioRewind">
             <span class="player-time">{{time}}</span>
             <div class="player-progress-line"></div>
@@ -19,6 +19,8 @@
     import { mapState, mapMutations } from 'vuex';
     import { backendHostname } from '@/backendHostname.js';
 
+    let moveTextId;
+    
     export default {
         data() {
             return {
@@ -26,19 +28,19 @@
             }
         },
         computed: {
-        ...mapState({
-            play: 'play',
-            user: 'user',
-            status: 'status',
-            currentAudio(state) {
-                if (!state.currentAudio) return '';
-                return state.currentAudio;
+            ...mapState({
+                play: 'play',
+                user: 'user',
+                status: 'status',
+                currentAudio(state) {
+                    if (!state.currentAudio) return '';
+                    return state.currentAudio;
+                }
+            }),
+            currentAudioSrc() {
+                if (!this.currentAudio.src) return '';
+                return backendHostname + '/' + this.currentAudio.src;
             }
-        }),
-        currentAudioSrc() {
-            if (!this.currentAudio.src) return '';
-            return backendHostname + '/' + this.currentAudio.src;
-        }
         },
         methods: {
             switchPlay() { 
@@ -111,9 +113,58 @@
             currentAudio(val) {
                 let audioElem = document.getElementById('audio');
 
+                if (val) {
+
+                    this.$nextTick(() => {
+    
+                        let textAudioNameWrapperEl = this.$refs.textAudioNameWrapperEl;
+                        let textAudioNameEl = this.$refs.textAudioNameEl;
+
+                        let txtElWidth = textAudioNameEl.offsetWidth;
+                        let txtWrapperWidth = textAudioNameWrapperEl.offsetWidth;
+                        let difference = txtElWidth - txtWrapperWidth;
+
+                        textAudioNameEl.style.transition = `0s linear`;
+                        textAudioNameEl.style.transform = `translateX(0px)`;
+                
+                        if (difference <= 0) {
+                            textAudioNameEl.style.transform = ``;
+                            return;
+                        } 
+                        
+                        clearTimeout(moveTextId);
+                        
+                        let delay;
+
+                        let moveText = (function() {
+
+                            if (this.currentAudio != val) {
+                                return;
+                            }
+
+                            if (textAudioNameEl.style.transform == `translateX(0px)`) {
+                                textAudioNameEl.style.transition = `2s linear`;
+                                textAudioNameEl.style.transform = `translateX(-${difference}px)`;
+                                delay = 3000;
+                            } else {
+                                textAudioNameEl.style.transition = `0s linear`;
+                                textAudioNameEl.style.transform = `translateX(0px)`;
+                                delay = 1000;
+                            }
+
+                            moveTextId = setTimeout(moveText, delay);
+                            
+                        }).bind(this);
+
+                        moveTextId = setTimeout(moveText, 1000);
+                    })
+                    
+                }
+
                 setTimeout(() => {
-                           audioElem.play()
+                           audioElem.play();
                        }, 0);
+
             }
         }
     }
@@ -161,6 +212,13 @@
         }
         &-txt {
             margin: 18px 0 31px;
+            overflow: hidden;
+            width: 90%;
+            white-space: nowrap;
+            text-align: center;
+            span {
+                display: inline-block;
+            }
         }
         &-progress {
             width: 100%;

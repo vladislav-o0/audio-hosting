@@ -45,16 +45,23 @@
                 this.switchPlay();
             },
             textMoveOn() {
+
                     let text = this.audioNameEl;
                     let wrapper = this.audioNameWrapperEl;
                     let stop = this.textMoveStopped;
+
+                    if (!wrapper) {
+                        //если анимация. Ждем ее конца
+                        setTimeout(this.textMoveOn, 1000);
+                        return;
+                    }
  
                     if (stop) {
                         this.textMoveStopped = false;
                         return;
                     }
 
-                    text.style.transition = '2s';
+                    text.style.transition = '2s linear';
 
                     let width = text.offsetWidth - wrapper.offsetWidth;
 
@@ -63,7 +70,7 @@
                     text.style.transform = 'translateX(' + -width + 'px)';
                     
                     setTimeout(() => {
-                        text.style.transition = '0s';
+                        text.style.transition = '0s linear';
                         text.style.transform = 'translateX(0px)';
                         setTimeout(this.textMoveOn, 500);
                     }, 2500);
@@ -74,13 +81,13 @@
         },
         mounted() {
             this.audioNameEl = this.$refs.audioName;
-           
+     
             if (this.$refs.audioNameWrapper.offsetWidth) {
                 this.audioNameWrapperEl = this.$refs.audioNameWrapper;
          
                 return this.audioNameWrapperEl;
             } //если анимации нет, значит ширина доступна сразу
-
+            
             setTimeout(() => {
                 this.audioNameWrapperEl = this.$refs.audioNameWrapper
             }, 1000); //иначе ширина доступна после завершения анимации
