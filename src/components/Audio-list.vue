@@ -27,7 +27,7 @@
             ...mapState(['user']),
             ...mapGetters(['filtration']),
             filtered() {
-                console.log(this.filtration)
+
                 let path = this.$route.path;
 
                 if (path != '/profile') return this.filtration.filteredTracks;

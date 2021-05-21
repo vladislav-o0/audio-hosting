@@ -84,8 +84,7 @@ export default createStore({
       }
 
       if (filteredTracks.length == 0) {
-        console.log(filteredTracks);
-        console.log(this)
+ 
         filterStatus = 'fail'; //Показать пользователю, что ничего не найдено.
 
         return {

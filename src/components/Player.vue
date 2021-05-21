@@ -74,7 +74,7 @@
                 }
             },
             progressUpdate(e) {
-                if (this.$route.path != '/') { //Переключаем кнопку если перешли на другую вкладку
+                if (this.$route.path != '/') { 
                     this.switchPlay();
                     return;
                 }

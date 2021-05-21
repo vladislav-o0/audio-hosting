@@ -64,11 +64,11 @@
                 this.audioNameWrapperEl = this.$refs.audioNameWrapper;
          
                 return this.audioNameWrapperEl;
-            } //если анимации нет, значит ширина доступна сразу
+            } 
 
             setTimeout(() => {
                 this.audioNameWrapperEl = this.$refs.audioNameWrapper
-            }, 1000); //иначе ширина доступна после завершения анимации
+            }, 1000); 
         }
     }
 </script>
