@@ -15,7 +15,9 @@
         this.axios({url: backendHostname + '/auth', method: 'GET'})
         .then(res => {
           this.$store.commit('auth_success', {user: res.data.user});
-        }).finally(() => {
+        })
+        .catch(() => {})
+        .finally(() => {
           this.$store.commit('setAuthComp');
         });
       } else {
