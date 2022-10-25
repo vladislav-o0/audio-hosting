@@ -10,21 +10,22 @@
     </div>
 </template>
 <script>
-       export default {
-           data(){
-               return {
-                   email : "",
-                   password : ""
-               }
-           },
-           methods: {
-                login: function () {
-                      let email = this.email 
-                      let password = this.password
-                      this.$store.dispatch('login', { email, password })
-                      .then(() => this.$router.push('/'))
-                      .catch(err => console.log(err))
-                  }
-           }
-       }
+    export default {
+        data(){
+            return {
+                email : "",
+                password : ""
+            }
+        },
+        methods: {
+            login() {
+                const email = this.email 
+                const password = this.password
+                
+                this.$store.dispatch('login', { email, password })
+                .then(() => this.$router.push('/'))
+                .catch(err => console.log(err))
+            }
+        }  
+    }
 </script>

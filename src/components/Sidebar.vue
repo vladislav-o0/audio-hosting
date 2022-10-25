@@ -7,7 +7,7 @@
                     <h3 v-if="filtration.filterStatus == 'success'" class="filter-genre-title">Жанры</h3>
                     <h3 v-else class="filter-genre-title">Ничего не найдено</h3>
                 </transition>
-                <label @mousedown.prevent class="filter-genre-label" v-for="(value, key) in genres" :class="toggleActive(key)">
+                <label @mousedown.prevent class="filter-genre-label" v-for="(value, key) in genres" :key="value" :class="toggleActive(key)">
                     <input v-model="selectedGenres" hidden type="checkbox" name="genre" :value="key">
                     {{value}}
                 </label>

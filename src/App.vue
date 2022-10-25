@@ -3,107 +3,107 @@
 </template>
 
 <script>
-  import { backendHostname } from '@/backendHostname.js';
+import { backendHostname } from '@/backendHostname.js';
 
-  export default {
+export default {
 
-    beforeCreate() {
-      const token = localStorage.getItem('token');
-      if (token) {
-        this.axios.defaults.headers.common['Authorization'] = token;
+  beforeCreate() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.axios.defaults.headers.common['Authorization'] = token;
 
-        this.axios({url: backendHostname + '/auth', method: 'GET'})
-        .then(res => {
-          this.$store.commit('auth_success', {user: res.data.user});
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.$store.commit('setAuthComp');
-        });
-      } else {
+      this.axios({url: backendHostname + '/auth', method: 'GET'})
+      .then(res => {
+        this.$store.commit('auth_success', {user: res.data.user});
+      })
+      .catch(() => {})
+      .finally(() => {
         this.$store.commit('setAuthComp');
-      }
-
-      this.$store.dispatch('getTracks')
+      });
+    } else {
+      this.$store.commit('setAuthComp');
     }
+
+    this.$store.dispatch('getTracks')
   }
+}
 </script>
 
 <style lang="scss">
-  body {
-    background: linear-gradient(90deg, #1ae7be, #09b2bf);
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
+body {
+  background: linear-gradient(90deg, #1ae7be, #09b2bf);
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255,.6);
+  width: 400px;
+  max-width: 100%;
+  padding: 100px 0px;
+  border-radius: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  box-shadow: 0px 0px 8px;
+  margin: 0 15px;
+  &-wrap {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
-  .wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 10px;
+  &-input {
+      height: 30px;
+      border-radius: 5px;
+      border: none;
+      margin: 8px;
+      text-align: center;
+      box-shadow: 0px 0px 6px;
   }
-  .form {
+  &-btn { 
+      padding: 0 40px;
+      height: 50px;
+      background-color: #051d36;
+      border: none;
+      color: wheat;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 17px;
+      outline: none;
+      &-back {
+        text-decoration: none;
+        font-size: 15px;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        background-color: rgba(255,255,255,.6);
-        width: 400px;
-        max-width: 100%;
-        padding: 100px 0px;
-        border-radius: 5px;
-        border: 2px solid rgba(255, 255, 255, 0.6);
-        position: relative;
-        box-shadow: 0px 0px 8px;
-        margin: 0 15px;
-        &-wrap {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        align-items: center;
+        position: absolute;
+        top: 15px;
+        margin: 0;
+        opacity: 0.7;
+        left: 15px;
+        height: 30px;
+        padding: 0px 10px;
+        &:hover {
+          opacity: 1;
         }
-        &-input {
-            height: 30px;
-            border-radius: 5px;
-            border: none;
-            margin: 8px;
-            text-align: center;
-            box-shadow: 0px 0px 6px;
-        }
-        &-btn { 
-            padding: 0 40px;
-            height: 50px;
-            background-color: #051d36;
-            border: none;
-            color: wheat;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 17px;
-            outline: none;
-            &-back {
-              text-decoration: none;
-              font-size: 15px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              position: absolute;
-              top: 15px;
-              margin: 0;
-              opacity: 0.7;
-              left: 15px;
-              height: 30px;
-              padding: 0px 10px;
-              &:hover {
-                opacity: 1;
-              }
-            }
-        }
-        &-header {
-            margin-top: 0;
-            font-size: 44px;
-            color: #051d36;
-            @media (max-width: 330px) {
-              font-size: 38px;
-            }
-        }
-    }
+      }
+  }
+  &-header {
+      margin-top: 0;
+      font-size: 44px;
+      color: #051d36;
+      @media (max-width: 330px) {
+        font-size: 38px;
+      }
+  }
+}
 </style>

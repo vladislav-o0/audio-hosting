@@ -9,90 +9,89 @@
 </template>
 
 <script>
-    import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
-    export default {
-        props: ['audio'],
-        data() {
-            return {
-                audioNameWrapperEl: null,
-                audioNameEl: null,
-                textMoveStopped: false
-            }
+export default {
+    props: ['audio'],
+    data() {
+        return {
+            audioNameWrapperEl: null,
+            audioNameEl: null,
+            textMoveStopped: false
+        }
+    },
+    computed: mapState({
+        play(state) {
+            if (state.currentAudio == this.audio && state.play) return true;
+            return false;
         },
-        computed: mapState({
-            play(state) {
-                if (state.currentAudio == this.audio && state.play) return true;
-                return false;
-            },
-        }),
-        methods: {
-            ...mapMutations(['switchPlay', 'setCurrent']),
-            setPlay() {
-                if (this.$store.state.currentAudio == this.audio) return this.switchPlay(); 
+    }),
+    methods: {
+        ...mapMutations(['switchPlay', 'setCurrent']),
+        setPlay() {
+            if (this.$store.state.currentAudio == this.audio) return this.switchPlay(); 
 
-                if (!this.$store.state.currentAudio || !this.$store.state.play) { 
-                    this.setCurrent(this.audio);
-                    this.switchPlay();
-                    return;
-                }
-                
-                if (this.$store.state.play) { 
-                    this.setCurrent(this.audio); 
-                }
-            },
-            setPause() {
+            if (!this.$store.state.currentAudio || !this.$store.state.play) { 
+                this.setCurrent(this.audio);
                 this.switchPlay();
-            },
-            textMoveOn() {
-
-                    let text = this.audioNameEl;
-                    let wrapper = this.audioNameWrapperEl;
-                    let stop = this.textMoveStopped;
-
-                    if (!wrapper) {
-                        //если анимация. Ждем ее конца
-                        setTimeout(this.textMoveOn, 1000);
-                        return;
-                    }
- 
-                    if (stop) {
-                        this.textMoveStopped = false;
-                        return;
-                    }
-
-                    text.style.transition = '2s linear';
-
-                    let width = text.offsetWidth - wrapper.offsetWidth;
-
-                    if (width < 0) return;
-
-                    text.style.transform = 'translateX(' + -width + 'px)';
-                    
-                    setTimeout(() => {
-                        text.style.transition = '0s linear';
-                        text.style.transform = 'translateX(0px)';
-                        setTimeout(this.textMoveOn, 500);
-                    }, 2500);
-            },
-            textMoveOff() {
-                this.textMoveStopped = true;
+                return;
+            }
+            
+            if (this.$store.state.play) { 
+                this.setCurrent(this.audio); 
             }
         },
-        mounted() {
-            this.audioNameEl = this.$refs.audioName;
-     
-            if (this.$refs.audioNameWrapper.offsetWidth) {
-                this.audioNameWrapperEl = this.$refs.audioNameWrapper;
-         
-                return this.audioNameWrapperEl;
-            } //если анимации нет, значит ширина доступна сразу
+        setPause() {
+            this.switchPlay();
+        },
+        textMoveOn() {
+            let text = this.audioNameEl;
+            let wrapper = this.audioNameWrapperEl;
+            let stop = this.textMoveStopped;
+
+            if (!wrapper) {
+                //если анимация. Ждем ее конца
+                setTimeout(this.textMoveOn, 1000);
+                return;
+            }
+ 
+            if (stop) {
+                this.textMoveStopped = false;
+                return;
+            }
+
+            text.style.transition = '2s linear';
+
+            let width = text.offsetWidth - wrapper.offsetWidth;
+
+            if (width < 0) return;
+
+            text.style.transform = 'translateX(' + -width + 'px)';
             
             setTimeout(() => {
-                this.audioNameWrapperEl = this.$refs.audioNameWrapper
-            }, 1000); //иначе ширина доступна после завершения анимации
+                text.style.transition = '0s linear';
+                text.style.transform = 'translateX(0px)';
+                setTimeout(this.textMoveOn, 500);
+            }, 2500);
+        },
+        textMoveOff() {
+            this.textMoveStopped = true;
         }
+    },
+    mounted() {
+        this.audioNameEl = this.$refs.audioName;
+ 
+        if (this.$refs.audioNameWrapper.offsetWidth) {
+            this.audioNameWrapperEl = this.$refs.audioNameWrapper;
+     
+            return this.audioNameWrapperEl;
+        } //если анимации нет, значит ширина доступна сразу
+        
+        setTimeout(() => {
+            this.audioNameWrapperEl = this.$refs.audioNameWrapper
+        }, 1000); //иначе ширина доступна после завершения анимации
     }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -127,6 +126,7 @@
             align-items: center;
             &-img {
                 width: 50%;
+                cursor: pointer;
             }
         }
     }

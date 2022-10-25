@@ -4,7 +4,7 @@
         <input type="text" class="form-input author" maxlength="40" name="author" placeholder="Автор">
         <input type="text" class="form-input name" maxlength="40"  name="name" placeholder="Название">
         <select name="genre" class="form-input genres">
-            <option v-for="(value, key) in genres" :selected="key == 'default'" :value="key">{{value}}</option>
+            <option v-for="(value, key) in genres" :key="value" :selected="key == 'default'" :value="key">{{value}}</option>
         </select>
         <input @change="selectedFile" class="form-input file" id="uploadFile" hidden type="file" name="file">
         <label class="uploadFile form-input"  for="uploadFile">{{fileName}}</label>
