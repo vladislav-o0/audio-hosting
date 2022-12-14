@@ -1,3 +1,3 @@
-const backendHostname = 'http://178.154.240.147:3000'
+const backendHostname = 'http://158.160.51.215:3000'
 
 export { backendHostname }
